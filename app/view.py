@@ -1,5 +1,5 @@
-from flask import Flask, request, redirect, url_for, render_template, abort
-from app import app
+from flask import request, redirect, url_for, render_template
+from . import app
 
 @app.route("/")
 def main():
@@ -13,6 +13,7 @@ def home():
 
     return render_template("home.html", agent=agent)
 
+#users
 @app.route("/hi/<string:name>") #/hi/roman?age=19
 def greetings(name):
     name = name.upper()
@@ -22,22 +23,5 @@ def greetings(name):
 
 @app.route("/admin")
 def admin():
-    to_url = url_for("greetings", name = "administrotor", age = 19)
+    to_url = url_for("greetings", name = "administrotor", age = 19, _external=True)
     return redirect(to_url)
-
-posts = [
-    {"id": 0, 'title': 'My First Post', 'content': 'This is the content of my first post.', 'author': 'John Doe'},
-    {"id": 1, 'title': 'Another Day', 'content': 'Today I learned about Flask macros.', 'author': 'Jane Smith'},
-    {"id": 2, 'title': 'Flask and Jinja2', 'content': 'Jinja2 is powerful for templating.', 'author': 'Mike Lee'}
-]
-
-@app.route("/posts")
-def get_posts():
-    return render_template("posts.html", posts=posts)
-
-@app.route("/post/<int:id>")
-def detail_post(id):
-    if id > 3:
-        abort(400)
-    post = posts[id]
-    return render_template("detail_post.html", post=post)
