@@ -7,6 +7,10 @@ app.config.from_pyfile("config.py")
 def main():
     return render_template("base.html")
 
+@app.route("/resume")
+def resume():
+    return render_template("resume.html")
+
 @app.route("/homepage")
 def home():
     #View for the Home page of your website.
