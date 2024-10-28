@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="display: flex;">
+    <!-- Вертикальне меню -->
+    <nav style="width: 200px; border-right: 1px solid #ccc; padding-right: 15px; margin-right: 20px;">
+        <ul style="list-style-type: none; padding: 0;">
+            <li><a href="{{ url_for('users.greetings', name='Roman', age=19) }}">Greet Roman</a></li>
+            <li><a href="{{ url_for('users.admin') }}">Admin</a></li>
+        </ul>
+    </nav>
+
+    <!-- Основний контент -->
+    <div>
+        <h1>Hello</h1>
+        <h1>User: {{ name | title }}</h1>
+
+        {% if age %}
+            <h1>Age: {{ age }}</h1>
+        {% else %}
+            <h1>Age: empty</h1>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

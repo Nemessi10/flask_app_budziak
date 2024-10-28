@@ -1,5 +1,5 @@
 from flask import render_template, abort
-from . import post_bp
+from app.posts import post_bp
 
 posts = [
     {"id": 0, 'title': 'My First Post', 'content': 'This is the content of my first post.', 'author': 'John Doe'},
