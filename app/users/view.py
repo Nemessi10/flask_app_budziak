@@ -12,3 +12,7 @@ def greetings(name):
 def admin():
     to_url = url_for("users.greetings", name = "administrator", age = 19, _external=True)
     return redirect(to_url)
+
+@user_bp.route("/resume")
+def resume():
+    return render_template("resume.html")
