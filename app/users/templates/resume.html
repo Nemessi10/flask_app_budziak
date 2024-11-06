@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %} HOME {% endblock %}
+
+{% block content %}
+    {% include 'header.html' %}
+
+    <nav class="my_navbar sidebar s_resume">
+        <a class="my_nav-link" href="#about">Про себе</a><br>
+        <a class="my_nav-link" href="#education">Освіта</a><br>
+        <a class="my_nav-link" href="#skills">Навички</a><br>
+        <a class="my_nav-link" href="#experience">Досвід роботи</a><br>
+        <a class="my_nav-link" href="#projects">Проєкти</a><br>
+        <a class="my_nav-link" href="#contact">Контакти</a>
+    </nav>
+
+    <section id="about">
+        <h2>Про себе</h2>
+        <img src="{{ url_for('static', filename='images/naruto.jpg') }}" alt="Фото профілю" style="width:150px;">
+        <p>Я — програміст із розумінням інженерії програмного забезпечення та досвідом роботи з різними технологіями. Моя мета — створювати інноваційні та ефективні програмні рішення, використовуючи найсучасніші методики і технології. Протягом останніх кількох років я працював над різноманітними проєктами, від створення веб-застосунків до розробки програм для обробки великих даних.</p>
+    </section>
+
+    <section id="education">
+        <h2>Освіта</h2>
+        <p>Я прямо зараз навчаюся на 3 курсі спеціальності <strong>Інженерія програмного забезпечення</strong>. Протягом навчання я здобув теоретичні знання та практичні навички у різноманітних сферах програмування та розробки програмного забезпечення, включаючи розробку на Java, Python, а також роботу з базами даних та фреймворками, такими як Spring Boot та Flask.</p>
+    </section>
+
+    <section id="skills">
+        <h2>Навички</h2>
+        <ul>
+            <li><strong>Мови програмування:</strong> Python, Java, JavaScript, C++, Ruby</li>
+            <li><strong>Фреймворки та технології:</strong> Spring Boot, Flask, Angular</li>
+            <li><strong>Інструменти:</strong> Git, Docker, PostgreSQL, MySQL</li>
+            <li><strong>Методології:</strong> REST API</li>
+            <li><strong>Інші навички:</strong> HTML, CSS, розробка адаптивних інтерфейсів</li>
+        </ul>
+    </section>
+
+    <section id="experience">
+        <h2>Досвід роботи</h2>
+        <p>На даний момент я працюю в команді PNUdev <strong>Fullstack Developer</strong>, де займаюсь розробкою та підтримкою веб-застосунка за допомогою Spring Boot. Також я розробляю користувацький інтерфейс за допомогою Angular.</p>
+    </section>
+
+    <section id="projects">
+        <h2>Проєкти</h2>
+        <p>Я завжди прагну до розвитку та покращення своїх навичок через роботу над різноманітними проєктами. Ось деякі з них:</p>
+        <ul>
+            <li><strong>Проєкт 1:</strong> Система управління записами з використанням Spring Boot та Angular для університету. Цей проєкт включав створення CRUD інтерфейсів, інтеграцію з базою даних MongpDB та реалізацію авторизації через Spring Security.</li>
+            <li><strong>Проєкт 3:</strong> Веб-застосунок на Spring Boot для генерації меню зі страв для користувачів.</li>
+        </ul>
+    </section>
+
+    <section id="contact">
+        <h2>Контакти</h2>
+        <p>Зв'язатися зі мною можна через наступні канали:</p>
+        <ul>
+            <li><strong>Email:</strong> roman.budziak.22@pnu.edu.ua</li>
+            <li><strong>GitHub:</strong> <a href="https://github.com/Nemessi10" target="_blank">Nemessi10</a></li>
+        </ul>
+    </section>
+
+{% endblock %}

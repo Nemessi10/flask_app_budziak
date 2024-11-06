@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title  %}Greeting Page {% endblock %}
+
+{% block content %}
+
+    {% include 'header.html' %}
+
+    <h1> Hi, {{ username }} </h1>
+    <button type="button" class="btn btn-outline-danger"><a href="{{ url_for('users.logout') }}">Вийти</a></button>
+
+    <h2>Додавання куки</h2>
+    <form class="row g-3" action="{{ url_for('users.set_cookie_val') }}" method="post">
+        <div class="col-sm-4">
+            <label for="cookey" class="form-label">Ключ куки:</label>
+            <input type="text" class="form-control" id="cookey" name="cookie_key">
+        </div>
+        <div class="col-sm-4">
+            <label for="cookie_val" class="form-label">Значення куки:</label>
+            <input type="text" class="form-control" id="cookie_val" name="cookie_value">
+        </div>
+        <div class="col-sm-4">
+            <label for="cookie_dur" class="form-label">Тривалість куки (сек):</label>
+            <input type="number" class="form-control" id="cookie_dur" name="cookie_duration">
+        </div>
+    <div class="col-sm-2"><button type="submit" class="btn btn-outline-success">Створити</button></div>
+    </form>
+
+    <br>
+
+    <h2>Видалити куку за ключем</h2>
+    <form class="row g-3" action="{{ url_for('users.delete_cookie_by_key') }}" method="post">
+        <div class="col-sm-12">
+            <label for="cookey_2" class="form-label">Ключ куки для видалення:</label>
+            <input type="text" class="form-control" id="cookey_2" name="cookie_key">
+        </div>
+    <div class="col-sm-2"><button type="submit" class="btn btn-outline-warning">Видалити</button></div>
+    </form>
+
+    <br>
+
+    <h2>Видалити всі куки</h2>
+    <form class="row g-3" action="{{ url_for('users.delete_all_cookies') }}" method="post">
+    <div class="col-sm-2"><button type="submit" class="btn btn-outline-danger">Видалити</button></div>
+    </form>
+
+    <br>
+
+    <h2>Всі куки</h2>
+    <table class="table table-{{ color }}">
+        <tr>
+            <th>Ключ</th><th>Значення</th>
+        </tr>
+        {% for cookie in cookies %}
+            <tr>
+                <td>{{ cookie[0] }}</td><td>{{ cookie[1] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <h2>Змінити колір таблиці</h2>
+    <form class="row g-3" action="{{ url_for('users.change_colors') }}" method="post">
+    <div class="col-sm-2"><button type="submit" value="danger" name="color" class="btn btn-outline-danger">Червоний</button></div>
+    <div class="col-sm-2"><button type="submit" value="success" name="color" class="btn btn-outline-success">Зелений</button></div>
+    <div class="col-sm-2"><button type="submit" value="warning" name="color" class="btn btn-outline-warning">Жовтий</button></div>
+    <div class="col-sm-2"><button type="submit" value="info" name="color" class="btn btn-outline-info">Блакитний</button></div>
+    </form>
+
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %} HOME {% endblock %}
+
+{% block content %}
+    {% include 'header.html' %}
+	<h1> This is your homepage :) </h1>
+    <h1> Agent: {{agent | upper}} </h1>
+    <h1> Agent: {{[agent, 1] | length}} </h1>
+{% endblock %}
