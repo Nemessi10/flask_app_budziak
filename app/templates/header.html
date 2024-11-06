@@ -1,0 +1,16 @@
+<header>
+    <nav class="my_navbar">
+      <div>
+        <h1>MySite</h1>
+        <div class="">
+          <div class="my_navbar-nav">
+            <a class="my_nav-link" href="{{ url_for('users.home') }}">Home</a>
+            <a class="my_nav-link" href="{{ url_for('users.resume') }}">Resume</a>
+            <a class="my_nav-link" href="{{ url_for('users.get_profile') }}">Profile</a>
+            <a class="my_nav-link" href="{{ url_for('users.login') }}">Login</a>
+            <a class="my_nav-link" href="{{ url_for('posts.get_posts') }}">Posts</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+</header>
