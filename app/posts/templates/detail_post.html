@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %} POSTS {% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header text-center">
+            <h1 class="card-title">Post № {{ post["id"] }} - {{ post["title"] }}</h1>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ post.get('content') }}</p>
+        </div>
+        <div class="card-footer text-end">
+            <a href="{{ url_for('posts.get_posts') }}" class="btn btn-secondary">Return to Posts</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
