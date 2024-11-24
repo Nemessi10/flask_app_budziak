@@ -2,6 +2,10 @@
 
 {% block title %} POSTS {% endblock %}
 
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('.static', filename='css/styles.css') }}">
+{% endblock %}
+
 {% block content %}
 <h1 class="text-center">Articles</h1>
 
@@ -10,6 +14,11 @@
         {% for post in posts %}
             <div class="col-md-4 mb-4">
                 <div class="card">
+                    <img
+                        src="{{ url_for('.static', filename='img/post.webp') }}"
+                        class="card-img-top"
+                        alt="Default Image"
+                    >
                     <div class="card-header">
                         <h5 class="card-title">{{ post['title'] }}</h5>
                     </div>
