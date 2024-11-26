@@ -7,12 +7,15 @@
 <div class="container mt-4">
     <div class="card">
         <div class="card-header text-center">
-            <h1 class="card-title">Post № {{ post["id"] }} - {{ post["title"] }}</h1>
+            <h1 class="card-title">Post № {{ post.id }} - {{ post.title }}</h1>
         </div>
         <div class="card-body">
-            <p class="card-text">{{ post.get('content') }}</p>
+            <p class="card-text">{{ post.content }}</p>
         </div>
         <div class="card-footer text-end">
+            <form action="{{ url_for('posts.delete_post', id=post.id) }}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-danger">Delete Post</button>
+            </form>
             <a href="{{ url_for('posts.get_posts') }}" class="btn btn-secondary">Return to Posts</a>
         </div>
     </div>

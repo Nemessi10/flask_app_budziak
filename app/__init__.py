@@ -1,8 +1,19 @@
 from flask import Flask, render_template
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase
+
+class Base(DeclarativeBase):
+    pass
+
+db = SQLAlchemy()
+migrate = Migrate(model_class=Base)
 
 def create_app(config_name="config"):
     app = Flask(__name__)
     app.config.from_object(config_name)
+    db.init_app(app)
+    migrate.init_app(app, db)
 
     @app.errorhandler(404)
     def page_not_found(e):
