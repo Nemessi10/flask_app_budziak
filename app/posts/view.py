@@ -3,7 +3,8 @@ from flask import render_template, abort, redirect, url_for, session, flash
 from app import db
 from app.posts import post_bp
 from app.posts.forms import PostForm
-from app.posts.models import Post
+from app.posts.models import Post, Tag
+
 
 @post_bp.route("/")
 def get_posts():
@@ -29,10 +30,17 @@ def add_post():
             is_active=form.is_active.data,
             publish_date=form.publish_date.data,
             category=form.category.data,
-            author=session.get("username", "Unknown")  # Автор із сесії
+            user_id=form.author_id.data  # Призначення автора за вибраним ID
         )
+
+        # Додаємо вибрані теги до поста
+        for tag_id in form.tags.data:
+            tag = Tag.query.get(tag_id)
+            new_post.tags.append(tag)
+
         db.session.add(new_post)
         db.session.commit()
+        flash("Post added successfully!", "success")
         return redirect(url_for("posts.get_posts"))
 
     return render_template("add_post.html", form=form)

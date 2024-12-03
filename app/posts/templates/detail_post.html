@@ -11,6 +11,18 @@
         </div>
         <div class="card-body">
             <p class="card-text">{{ post.content }}</p>
+            <p class="card-text">
+                <strong>Tags:</strong>
+                {% if post.tags %}
+                    <span class="badge bg-primary">
+                        {% for tag in post.tags %}
+                            {{ tag.name }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </span>
+                {% else %}
+                    <span>No tags available</span>
+                {% endif %}
+            </p>
         </div>
         <div class="card-footer text-end">
             <form action="{{ url_for('posts.delete_post', id=post.id) }}" method="post" class="d-inline">
