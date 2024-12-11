@@ -8,6 +8,8 @@
     <title> {% block title %} {% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    {% block styles %}{% endblock %}
 </head>
 <body>
 
@@ -24,6 +26,17 @@
         {% endfor %}
       {% endif %}
     {% endwith %}
+
+    <!-- Відображення Flash-повідомлень -->
+    <!--{% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} mt-3">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}-->
 
     {% block content %}
         Hello

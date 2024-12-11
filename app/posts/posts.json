@@ -1,0 +1,38 @@
+[
+    {
+        "id": 0,
+        "title": "Python",
+        "content": "Flask",
+        "is_active": true,
+        "publish_date": "2024-11-06",
+        "category": "tech",
+        "author": "admin"
+    },
+    {
+        "id": 1,
+        "title": "Test",
+        "content": "Test",
+        "is_active": false,
+        "publish_date": "2024-11-07",
+        "category": "tech",
+        "author": "admin"
+    },
+    {
+        "id": 2,
+        "title": "Test2",
+        "content": "Test2",
+        "is_active": true,
+        "publish_date": "2024-11-07",
+        "category": "tech",
+        "author": "admin"
+    },
+    {
+        "id": 3,
+        "title": "CSRF",
+        "content": "Cross-site request forgery",
+        "is_active": true,
+        "publish_date": "2024-11-25T23:54:00",
+        "category": "tech",
+        "author": "admin"
+    }
+]

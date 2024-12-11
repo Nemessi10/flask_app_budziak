@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}POSTS{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('.static', filename='css/styles.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Articles</h1>
+
+<div class="container">
+    <div class="row">
+        {% for post in posts %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img
+                        src="{{ url_for('.static', filename='img/post.webp') }}"
+                        class="card-img-top"
+                        alt="Default Image"
+                    >
+                    <div class="card-header">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Author:</strong> {{ post.author }}</p>
+                        <p><strong>Category:</strong> {{ post.category }}</p>
+                        <p><strong>Published on:</strong> {{ post.publish_date.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                        <p><strong>Status:</strong> {% if post.is_active %} Active {% else %} Inactive {% endif %}</p>
+                        <p>{{ post.content[:150] }}...</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ url_for('posts.detail_post', id=post.id) }}" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>No posts available.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
