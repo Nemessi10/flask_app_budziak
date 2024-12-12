@@ -158,6 +158,7 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and user.check_password(password):
             login_user(user)  # Авторизація
+            session["username"] = user.username
             flash("Login successful!", "success")
             return redirect(url_for("users.account"))
         flash("Invalid username or password.", "danger")
@@ -168,5 +169,6 @@ def login():
 @login_required
 def logout():
     logout_user()
+    session.pop("username", None)
     flash("You have been logged out.", "info")
     return redirect(url_for("auth.login"))
