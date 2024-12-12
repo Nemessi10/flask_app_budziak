@@ -13,6 +13,34 @@
 </head>
 <body>
 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Website</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                {% if current_user.is_authenticated %}
+                    <!-- Menu items for authenticated users -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('users.get_profile') }}">Мій профіль</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}">Вихід</a>
+                    </li>
+                {% else %}
+                    <!-- Menu items for non-authenticated users -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.login') }}">Увійти</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.register') }}">Реєстрація</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
     {% with msg = get_flashed_messages(with_categories=True) %}
 
     {% if msg %}
@@ -26,17 +54,6 @@
         {% endfor %}
       {% endif %}
     {% endwith %}
-
-    <!-- Відображення Flash-повідомлень -->
-    <!--{% with messages = get_flashed_messages(with_categories=True) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }} mt-3">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}-->
 
     {% block content %}
         Hello

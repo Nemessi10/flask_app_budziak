@@ -1,42 +1,25 @@
 from flask import render_template, request, redirect, url_for, make_response, session, flash
-from datetime import timedelta, datetime
-from app.users import user_bp
+from datetime import timedelta
+
+from flask_login import login_user, logout_user, login_required, current_user
+
+from app import db
+from app.users import user_bp, auth_bp
+from app.users.forms import RegistrationForm
+from app.users.models import User
 
 users_info = [
     {"username" : "admin", "password" : "admin"}
 ]
 
 @user_bp.route("/profile")
+@login_required
 def get_profile():
-    if "username" in session:
-        cookies = []
-        for cookie in request.cookies:
-            if cookie != 'session':
-                cookies.append([cookie, request.cookies[cookie]]) # ім'я, значення
-        username_value = session["username"]
-        color_value = session["color"]
-        return render_template("profile.html", username=username_value, cookies=cookies, color=color_value)
-    return redirect(url_for("users.login"))
-
-@user_bp.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        for user in users_info:
-            if username == user["username"] and password == user["password"]:
-                session["username"] = username
-                session["color"] = "success"
-                flash("Success: logged in successfully.", "success")
-                return redirect(url_for('users.get_profile'))
-        flash("Warning: wrong login or password.", "danger")
-    return render_template("login.html")
-
-@user_bp.route("/logout")
-def logout():
-    session.pop("username", None)
-    session.pop("age", None)
-    return redirect(url_for('users.get_profile'))
+    cookies = [
+        [cookie, request.cookies[cookie]] for cookie in request.cookies if cookie != 'session'
+    ]
+    color_value = session.get("color", "default")
+    return render_template("profile.html", username=current_user.username, cookies=cookies, color=color_value)
 
 @user_bp.route("/change_colors", methods=["GET", "POST"])
 def change_colors():
@@ -68,6 +51,34 @@ def admin():
 @user_bp.route("/resume")
 def resume():
     return render_template("resume.html")
+
+@user_bp.route("/list")
+@login_required
+def users_list():
+    # Отримуємо усіх користувачів із бази даних
+    users = User.query.all()
+
+    if not users:
+        # Якщо користувачів немає, відображаємо повідомлення
+        return render_template('users_list.html', message="No users found.")
+
+    # Якщо користувачі є, передаємо їх у шаблон
+    return render_template('users_list.html', users=users, users_count=len(users))
+
+@user_bp.route("/account")
+@login_required
+def account():
+    # Перевірка, чи користувач авторизований
+    if "username" not in session:
+        flash("You need to log in first.", "danger")
+        return redirect(url_for("auth.login"))  # Перенаправлення на сторінку входу
+
+    # Отримання даних користувача з сесії
+    username = session["username"]
+    user = User.query.filter_by(username=username).first()
+
+    return render_template("account.html", user=user)  # Передача даних користувача в шаблон
+
 
 @user_bp.route("/set_cookie")
 def set_cookie():
@@ -117,7 +128,45 @@ def delete_all_cookies():
         return response
     return redirect(url_for('users.get_profile'))
 
-@user_bp.route("/get_all_cookies")
-def get_all_cookies():
-    #cookies = request.cookies.get_dict()
-    cookies = 0
+# auth
+@auth_bp.route("/register", methods=["GET", "POST"])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        new_user = User(
+            username=form.username.data,
+            email=form.email.data,
+        )
+        new_user.set_password(form.password.data)
+        db.session.add(new_user)
+        db.session.commit()
+        flash("Registration successful! You can now log in.", "success")
+        return redirect(url_for("auth.login"))
+
+    return render_template("register.html", form=form)
+
+@auth_bp.route("/login", methods=["GET", "POST"])
+def login():
+    if current_user.is_authenticated:
+        flash("You are already logged in.", "info")
+        return redirect(url_for("users.get_profile"))
+
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        user = User.query.filter_by(username=username).first()
+        if user and user.check_password(password):
+            login_user(user)  # Авторизація
+            flash("Login successful!", "success")
+            return redirect(url_for("users.account"))
+        flash("Invalid username or password.", "danger")
+
+    return render_template("login.html")
+
+@auth_bp.route("/logout", methods=["GET", "POST"])
+@login_required
+def logout():
+    logout_user()
+    flash("You have been logged out.", "info")
+    return redirect(url_for("auth.login"))

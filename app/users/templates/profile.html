@@ -7,7 +7,7 @@
     {% include 'header.html' %}
 
     <h1> Hi, {{ username }} </h1>
-    <button type="button" class="btn btn-outline-danger"><a href="{{ url_for('users.logout') }}">Вийти</a></button>
+    <button type="button" class="btn btn-outline-danger"><a href="{{ url_for('auth.logout') }}">Вийти</a></button>
 
     <h2>Додавання куки</h2>
     <form class="row g-3" action="{{ url_for('users.set_cookie_val') }}" method="post">
