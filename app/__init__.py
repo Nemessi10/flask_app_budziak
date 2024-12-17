@@ -33,6 +33,7 @@ def create_app(config_name="config"):
     login_manager.login_message_category = "warning"
 
     from .users.models import User
+    from .events.models import EventCategory, SportEvent
 
     @app.errorhandler(404)
     def page_not_found(e):
@@ -43,8 +44,10 @@ def create_app(config_name="config"):
         from . import view
         from .posts import post_bp
         from .users import user_bp, auth_bp
+        from .events import events_bp
         app.register_blueprint(post_bp)
         app.register_blueprint(user_bp)
         app.register_blueprint(auth_bp)
+        app.register_blueprint(events_bp)
 
     return app

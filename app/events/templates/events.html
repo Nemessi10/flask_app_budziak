@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+        <h1>My Events</h1>
+        <hr>
+
+        <!-- Form for creating new event -->
+        <h3>Create New Event</h3>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.name.label(class="form-label") }}
+                {{ form.name(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.description.label(class="form-label") }}
+                {{ form.description(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.date.label(class="form-label") }}
+                {{ form.date(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.category_id.label(class="form-label") }}
+                {{ form.category_id(class="form-control") }}
+            </div>
+            <button type="submit" class="btn btn-primary">Create Event</button>
+        </form>
+    {% if form.errors %}
+    <ul class="alert alert-danger">
+        {% for field, errors in form.errors.items() %}
+            {% for error in errors %}
+                <li>{{ field }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+        <hr>
+        <h3>Upcoming Events</h3>
+        <div class="list-group">
+            {% for event in events %}
+                <div class="list-group-item">
+                    <h5>{{ event.name }}</h5>
+                    <p>{{ event.description }}</p>
+                    <a href="{{ url_for('events.event_details', event_id=event.id) }}" class="btn btn-info btn-sm">View Details</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
